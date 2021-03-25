@@ -7,19 +7,19 @@ using System.Text;
 namespace PasswordManager.Data.Tests.Model
 {
     [TestFixture]
-    public class PasswordTests
+    public class PasswordModelTests
     {
 
-        private Password passwordWithWebsite;
-        private Password passwordWithoutWebsite;
+        private PasswordModel passwordWithWebsite;
+        private PasswordModel passwordWithoutWebsite;
 
         [SetUp]
         public void Init()
         {
-            User user = new User("Patrick", "1234");
+            UserModel user = new UserModel("Patrick", "1234");
 
-            passwordWithoutWebsite = new Password("Facebook", "12345", user);
-            passwordWithWebsite = new Password("Facebook", "12345", user,"https://facebook.com");
+            passwordWithoutWebsite = new PasswordModel("Facebook", "12345", user);
+            passwordWithWebsite = new PasswordModel("Facebook", "12345", user,"https://facebook.com");
         }
 
         [Test]

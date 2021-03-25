@@ -2,20 +2,21 @@
 using PasswordManager.Data.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PasswordManager.Data.Tests.Model
 {
     [TestFixture]
-    public class UserTests
+    public class UserModelTests
     {
 
-        private User user;
+        private UserModel user;
 
         [SetUp]
         public void Init()
         {
-            this.user = new User("Patrick", "1234");
+            this.user = new UserModel("Patrick", "1234");
         }
 
 
@@ -34,6 +35,13 @@ namespace PasswordManager.Data.Tests.Model
         public void NewUser_NewUserWasCreated_PasswordWasInitialized()
         {
             Assert.That(user.Password, Is.Not.Null);
+        }
+        [Test]
+        public void NewUser_NewUserWasCreated_ListOfPasswordsInitialized()
+        {
+            var listOfUserPasswords = user.GetListOfPasswordAsList();
+
+            Assert.That(listOfUserPasswords, Is.Empty);
         }
     }
 }

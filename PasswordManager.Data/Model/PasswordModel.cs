@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PasswordManager.Data.Model
 {
-    public class Password
+    public class PasswordModel
     {
         [Required]
         public string Id { get; }
@@ -15,9 +15,9 @@ namespace PasswordManager.Data.Model
         public string Code { get; set; }
         public string Website { get; set; }
         [Required]
-        public User User { get; }
+        public UserModel User { get; }
 
-        public Password(string name, string code, User user ,string website = null)
+        public PasswordModel(string name, string code, UserModel user ,string website = null)
         {
             this.Id = Guid.NewGuid().ToString();
             this.Name = name;
