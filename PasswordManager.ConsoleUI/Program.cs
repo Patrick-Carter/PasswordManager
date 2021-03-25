@@ -6,7 +6,7 @@ namespace PasswordManager.ConsoleUI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("-------------Password Manager-------------");
+            Console.WriteLine("-------------Password Manager-------------"); 
             Console.ReadKey();
         }
     }
