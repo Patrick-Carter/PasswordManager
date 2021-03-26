@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PasswordManager.ConsoleUI.GuiViews;
+using System;
 
 namespace PasswordManager.ConsoleUI
 {
@@ -6,7 +7,8 @@ namespace PasswordManager.ConsoleUI
     {
         static void Main(string[] args)
         {
-            
+            var view = View.getInstance();
+            view.DisplayGui();
         }
     }
 }
