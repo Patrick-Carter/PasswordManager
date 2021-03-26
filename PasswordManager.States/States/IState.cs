@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PasswordManager.ConsoleUI.GuiStates
+namespace PasswordManager.States.States
 {
     public interface IState
     {

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PasswordManager.ConsoleUI.GuiStates
+namespace PasswordManager.States.States
 {
-    public class DisplayPasswordsState : IState
+    public class UpdateUserState : IState
     {
         StateMachine StateMachine;
 
-        public DisplayPasswordsState(StateMachine stateMachine)
+        public UpdateUserState(StateMachine stateMachine)
         {
             StateMachine = stateMachine;
         }
