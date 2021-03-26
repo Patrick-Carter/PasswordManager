@@ -6,14 +6,11 @@ namespace PasswordManager.States.States
 {
     public interface IState
     {
-        public void CreateUser();
-        public void Login();
-        public void Logout();
-        public void EnterPasswordName();
+        public void Create();
+        public void EnterName();
+        public void EnterPassword();
         public void Exit();
         public void Delete();
         public void Update();
-        public void EnteredUserPassword();
-        public void EnteredUserName();
     }
 }
