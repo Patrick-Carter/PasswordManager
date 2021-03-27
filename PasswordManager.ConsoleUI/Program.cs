@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PasswordManager.ConsoleUI.States;
+using System;
 
 namespace PasswordManager.ConsoleUI
 {
@@ -6,7 +7,15 @@ namespace PasswordManager.ConsoleUI
     {
         static void Main(string[] args)
         {
-          
+            IStateMachine stateMachine = StateMachine.GetInstance();
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("---PASSWORD MANAGER---");
+                stateMachine.DisplayView();
+            }
+
         }
     }
 }
