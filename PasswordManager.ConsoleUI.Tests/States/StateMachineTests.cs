@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using PasswordManager.ConsoleUI.States;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,22 @@ namespace PasswordManager.ConsoleUI.Tests.States
         [Test]
         public void NewStateMachine_StateMachineCreated_EntryPointStateNotNull()
         {
-            Assert.That(stateMachine.CurrentState, Is.InstanceOf<EntryPointState>());
+            Assert.That(stateMachine.EntryPointState, Is.Not.Null);
+        }
+
+        [Test]
+        public void NewStateMachine_StateMachineCreated_CreateUserStateNotNull()
+        {
+            Assert.That(stateMachine.CreateUserState, Is.Not.Null);
+        }
+
+        [Test]
+        public void DisplayView_WhenCalled_CallesCurrentStateToDispalyView()
+        {
+            var sm = new Mock<IStateMachine>();
+            sm.Object.DisplayView();
+
+            sm.Verify(a => a.DisplayView(), Times.Once());
         }
 
     }

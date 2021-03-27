@@ -9,30 +9,28 @@ namespace PasswordManager.ConsoleUI.States
     {
         private IStateMachine stateMachine;
         private IView entryView;
-        private IView loginView;
 
         public EntryPointState(IStateMachine stateMachine)
         {
             this.stateMachine = stateMachine;
             entryView = new EntryPointView();
-            loginView = new LoginView();
         }
         private void Create()
         {
-            throw new NotImplementedException();
+            stateMachine.CurrentState = stateMachine.CreateUserState;
         }
 
         public void DisplayView()
         {
-            string input = entryView.Display();
+            string res = entryView.Display();
 
-            if (input.ToLower() == "create") stateMachine.CurrentState = stateMachine.EntryPointState;
-            else Login(input);
+            if (res.ToLower() == "create") Create();
+            else Login(res);
         }
 
         private void Login(string userName)
         {
-            string input = loginView.Display();
+            throw new NotImplementedException();
         }
     }
 }

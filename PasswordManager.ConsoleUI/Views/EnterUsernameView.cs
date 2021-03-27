@@ -4,12 +4,12 @@ using System.Text;
 
 namespace PasswordManager.ConsoleUI.Views
 {
-    public class LoginView : IView
+    public class EnterUsernameView : IView
     {
         public string Display()
         {
-            Console.WriteLine("Please enter password...");
-            string input = Console.ReadLine();
+            Console.WriteLine("Enter Username...");
+            var input = Console.ReadLine();
             return input;
         }
     }
