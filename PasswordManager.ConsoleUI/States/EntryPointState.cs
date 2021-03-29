@@ -1,4 +1,5 @@
-﻿using PasswordManager.ConsoleUI.Views;
+﻿using PasswordManager.ConsoleUI.Constants;
+using PasswordManager.ConsoleUI.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -24,7 +25,7 @@ namespace PasswordManager.ConsoleUI.States
         {
             string res = entryView.Display();
 
-            if (res.ToLower() == "create") Create();
+            if (res.ToLower() == StringConstants.CREATE) Create();
             else Login(res);
         }
 
