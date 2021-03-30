@@ -1,5 +1,6 @@
-﻿using PasswordManager.ConsoleUI.States;
+﻿using PasswordManager.Data.Model;
 using System;
+using System.IO;
 
 namespace PasswordManager.ConsoleUI
 {
@@ -7,15 +8,22 @@ namespace PasswordManager.ConsoleUI
     {
         static void Main(string[] args)
         {
-            IStateMachine stateMachine = StateMachine.GetInstance();
-
-            while (true)
+            using (StreamWriter file = new StreamWriter("testy.txt", true))
             {
-                Console.Clear();
-                Console.WriteLine("---PASSWORD MANAGER---");
-                stateMachine.DisplayView();
+                UserModel user = new UserModel("Patrick", "123455");
+
+                file.WriteLine(user);
             }
 
+            string[] lines = File.ReadAllLines("testy.txt");
+
+            foreach (var item in lines)
+            {
+                Console.WriteLine(item);
+            }
+                Console.ReadLine();
         }
+
+       
     }
 }
