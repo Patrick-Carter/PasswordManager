@@ -18,7 +18,7 @@ namespace PasswordManager.Data.Tests.UnitOfWork.Mocks
         }
         public void AddUserToDB(UserModel user)
         {
-            if (userRepo.FindUser(user) != null)
+            if (userRepo.FindUser(user.UserName) != null)
             {
                 return;
             }

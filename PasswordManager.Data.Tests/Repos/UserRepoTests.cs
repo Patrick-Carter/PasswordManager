@@ -30,7 +30,7 @@ namespace PasswordManager.Data.Tests.Repos
             IUnitOfWork uow = new UnitOfWorkMock();
             UserModel userToFind = new UserModel("TakenUserName", "12345");
 
-            UserModel user = uow.userRepo.FindUser(userToFind);
+            UserModel user = uow.userRepo.FindUser(userToFind.UserName);
 
             Assert.That(user, Is.Not.Null);
         }
@@ -40,7 +40,7 @@ namespace PasswordManager.Data.Tests.Repos
             IUnitOfWork uow = new UnitOfWorkMock();
             UserModel userToFind = new UserModel("NotInDB", "12345");
 
-            UserModel user = uow.userRepo.FindUser(userToFind);
+            UserModel user = uow.userRepo.FindUser(userToFind.UserName);
 
             Assert.That(user, Is.Null);
         }

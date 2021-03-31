@@ -9,6 +9,6 @@ namespace PasswordManager.Data.Repos
     {
         public List<UserModel> ListOfUsers { get; }
         public UserModel CreateUser(string username, string password);
-        public UserModel FindUser(UserModel user);
+        public UserModel FindUser(string username);
     }
 }

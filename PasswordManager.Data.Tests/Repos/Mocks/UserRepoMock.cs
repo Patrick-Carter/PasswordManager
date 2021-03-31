@@ -3,6 +3,7 @@ using PasswordManager.Data.Repos;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace PasswordManager.Data.Tests.Repos.Mocks
 {
@@ -26,16 +27,9 @@ namespace PasswordManager.Data.Tests.Repos.Mocks
             return user;
         }
 
-        public UserModel FindUser(UserModel user)
+        public UserModel FindUser(string username)
         {
-            foreach (var u in ListOfUsers)
-            {
-                if (u.UserName == user.UserName)
-                {
-                    return u;
-                }
-            }
-            return null;
+            return this.ListOfUsers.Where(q => q.UserName == username).FirstOrDefault();
         }
     }
 }

@@ -1,8 +1,9 @@
-﻿using PasswordManager.Data.Model;
+﻿using PasswordManager.Data.Constants;
+using PasswordManager.Data.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using System.Linq;
 
 namespace PasswordManager.Data.Repos
 {
@@ -13,7 +14,13 @@ namespace PasswordManager.Data.Repos
 
         public UserRepo()
         {
-            string[] allUsers = File.ReadAllLines(@"D:\pmcsvfiles\users.txt");
+            if (!File.Exists(STRINGCONSTANTS.USER_DB)) 
+            {
+                var file = File.Create(STRINGCONSTANTS.USER_DB);
+                file.Close();
+            }
+            
+            string[] allUsers = File.ReadAllLines(STRINGCONSTANTS.USER_DB);
 
             foreach (var user in allUsers)
             {
@@ -28,16 +35,9 @@ namespace PasswordManager.Data.Repos
             return user;
         }
 
-        public UserModel FindUser(UserModel user)
+        public UserModel FindUser(string username)
         {
-            foreach (var u in ListOfUsers)
-            {
-                if (u.UserName == user.UserName)
-                {
-                    return u;
-                }
-            }
-            return null;
+            return this.ListOfUsers.Where(q => q.UserName == username).FirstOrDefault();
         }
     }
 }

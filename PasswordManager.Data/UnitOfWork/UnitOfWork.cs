@@ -1,4 +1,5 @@
-﻿using PasswordManager.Data.Model;
+﻿using PasswordManager.Data.Constants;
+using PasswordManager.Data.Model;
 using PasswordManager.Data.Repos;
 using System;
 using System.Collections.Generic;
@@ -18,13 +19,13 @@ namespace PasswordManager.Data.UnitOfWork
         }
         public void AddUserToDB(UserModel user)
         {
-            if (userRepo.FindUser(user) != null)
+            if (userRepo.FindUser(user.UserName) != null)
             {
                 return;
             }
 
             userRepo.ListOfUsers.Add(user);
-            using (StreamWriter file = new StreamWriter(@"D:\pmcsvfiles\users.txt", true))
+            using (StreamWriter file = new StreamWriter(STRINGCONSTANTS.USER_DB, true))
             {
                 file.WriteLine($"{user.Id},{user.UserName},{user.Password}");
             }
