@@ -1,25 +1,23 @@
 ﻿using PasswordManager.Data.Model;
+using PasswordManager.Data.Repos;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 
-namespace PasswordManager.Data.Repos
+namespace PasswordManager.Data.Tests.Repos.Mocks
 {
-    public class UserRepo : IUserRepo
+    class UserRepoMock : IUserRepo
     {
-
-        public List<UserModel> ListOfUsers { get; } = new List<UserModel>();
-
-        public UserRepo()
-        {
-            string[] allUsers = File.ReadAllLines(@"D:\pmcsvfiles\users.txt");
-
-            foreach (var user in allUsers)
+        public List<UserModel> ListOfUsers { get; } = new List<UserModel>
             {
-                string[] splitLine = user.Split(",");
-                ListOfUsers.Add(new UserModel(splitLine[0], splitLine[1], splitLine[2]));
-            }
+                new UserModel("TakenUserName", "12345"),
+                new UserModel("Nelly", "12345"),
+                new UserModel("Kert", "12345")
+            };
+
+        public UserRepoMock()
+        {
+            
         }
 
         public UserModel CreateUser(string username, string password)

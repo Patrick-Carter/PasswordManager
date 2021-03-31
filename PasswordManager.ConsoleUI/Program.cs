@@ -1,5 +1,7 @@
 ﻿using PasswordManager.Data.Model;
+using PasswordManager.Data.UnitOfWork;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace PasswordManager.ConsoleUI
@@ -8,20 +10,21 @@ namespace PasswordManager.ConsoleUI
     {
         static void Main(string[] args)
         {
-            using (StreamWriter file = new StreamWriter("testy.txt", true))
+            IUnitOfWork uow = new UnitOfWork();
+            UserModel user = new UserModel("Patrick", "12345");
+
+            UserModel u = uow.userRepo.FindUser(user);
+
+            if (u != null)
             {
-                UserModel user = new UserModel("Patrick", "123455");
-
-                file.WriteLine(user);
+                Console.WriteLine($"{u.Id},{u.UserName},{u.Password}");
             }
-
-            string[] lines = File.ReadAllLines("testy.txt");
-
-            foreach (var item in lines)
+            else
             {
-                Console.WriteLine(item);
+                Console.WriteLine("user not found");
             }
-                Console.ReadLine();
+            
+            Console.ReadLine();
         }
 
        

@@ -25,6 +25,14 @@ namespace PasswordManager.Data.Model
             this.ListOfPassword = new List<PasswordModel>();
         }
 
+        public UserModel(string id, string username, string password)
+        {
+            this.Id = id;
+            this.UserName = username;
+            this.Password = password;
+            this.ListOfPassword = new List<PasswordModel>();
+        }
+
         public List<PasswordModel> GetListOfPasswordAsList()
         {
             return ListOfPassword.ToList();
