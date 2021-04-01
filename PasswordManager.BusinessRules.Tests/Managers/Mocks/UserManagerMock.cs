@@ -42,5 +42,14 @@ namespace PasswordManager.BusinessRules.Tests.Managers.Mocks
         {
             currentUser = null;
         }
+
+        public void RemoveUser(string password)
+        {
+            if (password == currentUser.Password)
+            {
+                uow.RemoveUserFromDB(currentUser);
+                currentUser = null;
+            }
+        }
     }
 }

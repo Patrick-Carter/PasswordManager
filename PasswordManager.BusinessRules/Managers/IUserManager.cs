@@ -12,6 +12,6 @@ namespace PasswordManager.BusinessRules.Managers
         public void LogoutUser();
 
         public UserModel GetCurrentUser();
-
+        void RemoveUser(string password);
     }
 }

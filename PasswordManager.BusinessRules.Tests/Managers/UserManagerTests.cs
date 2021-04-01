@@ -43,5 +43,13 @@ namespace PasswordManager.BusinessRules.Tests.Managers
             userManager.LogoutUser();
             Assert.That(userManager.GetCurrentUser(), Is.Null);
         }
+        [Test]
+        public void RemoveUser_CorrectPasswordEntered_RemoveUser()
+        {
+            userManager.LoginUser("TakenUserName", "12345");
+            userManager.RemoveUser("12345");
+
+            Assert.That(userManager.GetCurrentUser(), Is.Null);
+        }
     }
 }

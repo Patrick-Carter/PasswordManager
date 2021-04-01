@@ -1,8 +1,6 @@
 ﻿using PasswordManager.Data.Model;
 using PasswordManager.Data.Repos;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 
 namespace PasswordManager.Data.Tests.Repos.Mocks

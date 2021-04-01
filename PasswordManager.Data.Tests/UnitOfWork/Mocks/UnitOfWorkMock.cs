@@ -23,6 +23,11 @@ namespace PasswordManager.Data.Tests.UnitOfWork.Mocks
             }
         }
 
+        public void RemoveUserFromDB(UserModel user)
+        {
+           userRepo.ListOfUsers.Remove(user);
+        }
+
         private bool ValidUser(UserModel user)
         {
             if (userRepo.FindUser(user.UserName) == null)

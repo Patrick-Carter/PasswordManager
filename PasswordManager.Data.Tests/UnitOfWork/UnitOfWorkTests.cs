@@ -18,7 +18,7 @@ namespace PasswordManager.Data.Tests.UnitOfWork
             UnitOfWorkMock uowMock = new UnitOfWorkMock();
             int count = uowMock.userRepo.ListOfUsers.Count;
 
-            UserModel newUser = uowMock.userRepo.CreateUser("Patrick", "12345");
+            UserModel newUser = uowMock.userRepo.CreateUser("NotAUser", "12345");
             uowMock.AddUserToDB(newUser);
 
             Assert.That(uowMock.userRepo.ListOfUsers.Count, Is.EqualTo(count + 1));
@@ -39,6 +39,21 @@ namespace PasswordManager.Data.Tests.UnitOfWork
             }
 
             Assert.That(uowMock.userRepo.ListOfUsers.Count, Is.EqualTo(count));
+        }
+
+        [Test]
+        public void RemoveUserFromDB_WhenCalled_RemovesUserFromDB()
+        {
+            UnitOfWorkMock uowMock = new UnitOfWorkMock();
+            UserModel newUser = uowMock.userRepo.CreateUser("NotAUser", "12345");
+            uowMock.AddUserToDB(newUser);
+
+            int count = uowMock.userRepo.ListOfUsers.Count;
+
+            uowMock.RemoveUserFromDB(newUser);
+
+            Assert.That(uowMock.userRepo.ListOfUsers.Count, Is.EqualTo(count - 1));
+
         }
     }
 }

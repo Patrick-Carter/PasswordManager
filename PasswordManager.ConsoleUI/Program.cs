@@ -63,13 +63,29 @@ namespace PasswordManager.ConsoleUI
                     while (userManager.GetCurrentUser() != null)
                     {
                         var user = userManager.GetCurrentUser();
-                        Console.WriteLine($"Hello {user.UserName}, Type 'logout' to logout.");
+                        Console.WriteLine($"Hello {user.UserName}, Type 'logout' to logout or 'remove' to remove this account.");
                         var input = Console.ReadLine();
                         if (input.ToLower() == "logout")
                         {
                             userManager.LogoutUser();
                             Console.WriteLine("You have been logged out. Press enter to continue...");
                             Console.ReadLine();
+                        }
+                        else if (input.ToLower() == "remove")
+                        {
+                            Console.WriteLine("Enter your current user password to delete your account...");
+                            input = Console.ReadLine();
+                            if (input == user.Password)
+                            {
+                                userManager.RemoveUser(input);
+                                Console.WriteLine("Account deleted. Press enter to continue...");
+                                Console.ReadLine();
+                            }
+                            else
+                            {
+                                Console.WriteLine("invaild password. Account was not deleted.");
+                            }
+                           
                         }
                     }
 

@@ -40,5 +40,14 @@ namespace PasswordManager.BusinessRules.Managers
         {
             currentUser = null;
         }
+
+        public void RemoveUser(string password)
+        {
+            if (password == currentUser.Password)
+            {
+                uow.RemoveUserFromDB(currentUser);
+                currentUser = null;
+            }
+        }
     }
 }

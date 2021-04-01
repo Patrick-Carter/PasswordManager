@@ -22,7 +22,20 @@ namespace PasswordManager.Data.UnitOfWork
             if (ValidUser(user))
             {
                 userRepo.ListOfUsers.Add(user);
-                using (StreamWriter file = new StreamWriter(STRINGCONSTANTS.USER_DB, true))
+                SaveChanges();
+            }
+        }
+        public void RemoveUserFromDB(UserModel user)
+        {
+            userRepo.ListOfUsers.Remove(user);
+            SaveChanges();
+        }
+
+        private void SaveChanges()
+        {
+            using (StreamWriter file = new StreamWriter(STRINGCONSTANTS.USER_DB, false))
+            {
+                foreach (var user in userRepo.ListOfUsers)
                 {
                     file.WriteLine($"{user.Id},{user.UserName},{user.Password}");
                 }

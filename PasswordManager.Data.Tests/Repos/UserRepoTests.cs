@@ -1,11 +1,7 @@
 ﻿using NUnit.Framework;
 using PasswordManager.Data.Model;
-using PasswordManager.Data.Tests.Repos.Mocks;
 using PasswordManager.Data.Tests.UnitOfWork.Mocks;
 using PasswordManager.Data.UnitOfWork;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PasswordManager.Data.Tests.Repos
 {

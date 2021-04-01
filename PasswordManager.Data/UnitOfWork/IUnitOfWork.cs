@@ -9,6 +9,7 @@ namespace PasswordManager.Data.UnitOfWork
     public interface IUnitOfWork
     {
         public IUserRepo userRepo { get; }
-        public void AddUserToDB(UserModel user); 
+        public void AddUserToDB(UserModel user);
+        public void RemoveUserFromDB(UserModel user);
     }
 }
