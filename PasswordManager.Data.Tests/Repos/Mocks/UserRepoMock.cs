@@ -23,8 +23,12 @@ namespace PasswordManager.Data.Tests.Repos.Mocks
 
         public UserModel CreateUser(string username, string password)
         {
-            UserModel user = new UserModel(username, password);
-            return user;
+            if (FindUser(username) == null)
+            {
+                UserModel user = new UserModel(username, password);
+                return user;
+            }
+            return null;
         }
 
         public UserModel FindUser(string username)

@@ -19,16 +19,23 @@ namespace PasswordManager.Data.UnitOfWork
         }
         public void AddUserToDB(UserModel user)
         {
-            if (userRepo.FindUser(user.UserName) != null)
+            if (ValidUser(user))
             {
-                return;
+                userRepo.ListOfUsers.Add(user);
+                using (StreamWriter file = new StreamWriter(STRINGCONSTANTS.USER_DB, true))
+                {
+                    file.WriteLine($"{user.Id},{user.UserName},{user.Password}");
+                }
             }
+        }
 
-            userRepo.ListOfUsers.Add(user);
-            using (StreamWriter file = new StreamWriter(STRINGCONSTANTS.USER_DB, true))
+        private bool ValidUser(UserModel user)
+        {
+            if (userRepo.FindUser(user.UserName) == null)
             {
-                file.WriteLine($"{user.Id},{user.UserName},{user.Password}");
+                return true;
             }
+            return false;
         }
     }
 }

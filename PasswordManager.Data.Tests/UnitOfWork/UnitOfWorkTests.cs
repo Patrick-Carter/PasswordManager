@@ -32,7 +32,11 @@ namespace PasswordManager.Data.Tests.UnitOfWork
             int count = uowMock.userRepo.ListOfUsers.Count;
 
             UserModel newUser = uowMock.userRepo.CreateUser("TakenUserName", "12345");
-            uowMock.AddUserToDB(newUser);
+
+            if (newUser != null)
+            {
+                uowMock.AddUserToDB(newUser);
+            }
 
             Assert.That(uowMock.userRepo.ListOfUsers.Count, Is.EqualTo(count));
         }

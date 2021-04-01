@@ -1,4 +1,5 @@
-﻿using PasswordManager.Data.Model;
+﻿using PasswordManager.BusinessRules.Managers;
+using PasswordManager.Data.Model;
 using PasswordManager.Data.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -15,32 +16,63 @@ namespace PasswordManager.ConsoleUI
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("create a user or find a user? ['create'/'find']");
+                Console.WriteLine("create a user or login? ['create'/'login']");
                 var answer = Console.ReadLine();
                 if (answer.ToLower() == "create")
                 {
                     Console.WriteLine("enter username...");
                     var username = Console.ReadLine();
+                    while (true)
+                    {
+                        
+                        if (uow.userRepo.FindUser(username) != null)
+                        {
+                            Console.WriteLine("username already in use. Please Try again...");
+                            username = Console.ReadLine();
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    
                     Console.WriteLine("enter password...");
                     var password = Console.ReadLine();
                     var userToAdd = uow.userRepo.CreateUser(username, password);
                     uow.AddUserToDB(userToAdd);
                 }
-                else if (answer.ToLower() == "find")
+                else if (answer.ToLower() == "login")
                 {
-                    Console.WriteLine("Enter username of user you'd like to find");
-                    var username = Console.ReadLine();
-                    var user = uow.userRepo.FindUser(username);
-                    if (user == null)
+                    IUserManager userManager = new UserManager(uow);
+                    Console.WriteLine("enter your username...");
+                    var userName = Console.ReadLine();
+                    Console.WriteLine("enter your password...");
+                    var password = Console.ReadLine();
+                    userManager.LoginUser(userName, password);
+                    while (userManager.GetCurrentUser() == null)
                     {
-                        Console.WriteLine($"No user with the username of {username} was found.");
+                        Console.WriteLine("Invalid user credentials. Please try again.");
+                        Console.WriteLine("enter your username...");
+                        userName = Console.ReadLine();
+                        Console.WriteLine("enter your password...");
+                        password = Console.ReadLine();
+                        
+                        userManager.LoginUser(userName, password);
                     }
-                    else
+
+                    while (userManager.GetCurrentUser() != null)
                     {
-                        Console.WriteLine($"{username} was found and has an ID of {user.Id}");
+                        var user = userManager.GetCurrentUser();
+                        Console.WriteLine($"Hello {user.UserName}, Type 'logout' to logout.");
+                        var input = Console.ReadLine();
+                        if (input.ToLower() == "logout")
+                        {
+                            userManager.LogoutUser();
+                            Console.WriteLine("You have been logged out. Press enter to continue...");
+                            Console.ReadLine();
+                        }
                     }
-                    Console.WriteLine("press enter to find or create another user...");
-                    Console.ReadLine();
+
                 }
                 else
                 {

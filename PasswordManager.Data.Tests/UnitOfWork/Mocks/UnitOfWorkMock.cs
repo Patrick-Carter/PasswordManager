@@ -18,12 +18,18 @@ namespace PasswordManager.Data.Tests.UnitOfWork.Mocks
         }
         public void AddUserToDB(UserModel user)
         {
-            if (userRepo.FindUser(user.UserName) != null)
-            {
-                return;
+            if (ValidUser(user)){
+                userRepo.ListOfUsers.Add(user);
             }
+        }
 
-            userRepo.ListOfUsers.Add(user);
+        private bool ValidUser(UserModel user)
+        {
+            if (userRepo.FindUser(user.UserName) == null)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

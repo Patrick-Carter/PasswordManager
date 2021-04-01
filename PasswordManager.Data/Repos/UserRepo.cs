@@ -31,8 +31,12 @@ namespace PasswordManager.Data.Repos
 
         public UserModel CreateUser(string username, string password)
         {
-            UserModel user = new UserModel(username, password);
-            return user;
+            if (FindUser(username) == null)
+            {
+                UserModel user = new UserModel(username, password);
+                return user;
+            }
+            return null;
         }
 
         public UserModel FindUser(string username)

@@ -13,15 +13,23 @@ namespace PasswordManager.Data.Tests.Repos
     public class UserRepoTests
     {
         [Test]
-        public void CreateUser_WhenCalled_NewUserCreated()
+        public void CreateUser_UniqueUserMade_NewUserCreated()
         {
             IUnitOfWork uow = new UnitOfWorkMock();
-
             UserModel newUser = uow.userRepo.CreateUser("Patrick", "12345");
 
             Assert.That(newUser.UserName, Is.EqualTo("Patrick"));
             Assert.That(newUser.Password, Is.EqualTo("12345"));
             Assert.That(newUser, Is.InstanceOf<UserModel>());
+        }
+
+        [Test]
+        public void CreateUser_UsernameAlreadyInUse_ReturnNull()
+        {
+            IUnitOfWork uow = new UnitOfWorkMock();
+            UserModel newUser = uow.userRepo.CreateUser("TakenUserName", "12345");
+
+            Assert.That(newUser, Is.Null);
         }
         
         [Test]
