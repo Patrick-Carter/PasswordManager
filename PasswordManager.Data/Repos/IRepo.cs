@@ -8,7 +8,8 @@ namespace PasswordManager.Data.Repos
     public interface IRepo<T>
     {
         public List<T> ListOfItems { get; }
-        public T Create(string username, string password);
+        public T Create(T model);
         public T GetByName(string name);
+        public void Remove(T model);
     }
 }

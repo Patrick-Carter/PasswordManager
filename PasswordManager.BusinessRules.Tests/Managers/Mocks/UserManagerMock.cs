@@ -1,18 +1,18 @@
 ﻿using PasswordManager.BusinessRules.Managers;
-using PasswordManager.Data.dbProcessors;
+using PasswordManager.Data.Tests.Repos.Mocks;
 using PasswordManager.Data.Model;
-using PasswordManager.Data.Tests.dbProcessors.Mocks;
+using PasswordManager.Data.Repos;
 
 namespace PasswordManager.BusinessRules.Tests.Managers.Mocks
 {
     public class UserManagerMock : IUserManager
     {
         private UserModel currentUser;
-        private IdbProcesser<UserModel> uow;
+        private IRepo<UserModel> userRepo;
 
-        public UserManagerMock(IdbProcesser<UserModel> unitOfWork = null)
+        public UserManagerMock(IRepo<UserModel> userRepo = null)
         {
-            uow = unitOfWork ?? new UserdbProcessorMock();
+            this.userRepo = userRepo ?? new UserRepoMock();
         }
 
         public UserModel GetCurrentUser()
@@ -22,7 +22,7 @@ namespace PasswordManager.BusinessRules.Tests.Managers.Mocks
 
         public void LoginUser(string userName, string password)
         {
-            var user = uow.userRepo.GetByName(userName);
+            var user = userRepo.GetByName(userName);
 
             if (user == null || user.Password != password) 
             {
@@ -44,7 +44,7 @@ namespace PasswordManager.BusinessRules.Tests.Managers.Mocks
         {
             if (password == currentUser.Password)
             {
-                uow.RemoveFromDB(currentUser);
+                userRepo.Remove(currentUser);
                 currentUser = null;
             }
         }

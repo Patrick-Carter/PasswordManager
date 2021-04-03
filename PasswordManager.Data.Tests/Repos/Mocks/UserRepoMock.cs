@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace PasswordManager.Data.Tests.Repos.Mocks
 {
-    class UserRepoMock : IRepo<UserModel>
+    public class UserRepoMock : IRepo<UserModel>
     {
         public List<UserModel> ListOfItems { get; } = new List<UserModel>
             {
@@ -19,11 +19,11 @@ namespace PasswordManager.Data.Tests.Repos.Mocks
             
         }
 
-        public UserModel Create(string username, string password)
+        public UserModel Create(UserModel user)
         {
-            if (GetByName(username) == null)
+            if (GetByName(user.UserName) == null)
             {
-                UserModel user = new UserModel(username, password);
+                ListOfItems.Add(user);
                 return user;
             }
             return null;
@@ -32,6 +32,11 @@ namespace PasswordManager.Data.Tests.Repos.Mocks
         public UserModel GetByName(string searchTerm)
         {
             return this.ListOfItems.Where(q => q.UserName == searchTerm).FirstOrDefault();
+        }
+
+        public void Remove(UserModel model)
+        {
+            ListOfItems.Remove(model);
         }
     }
 }

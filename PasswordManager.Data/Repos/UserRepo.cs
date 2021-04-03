@@ -29,19 +29,37 @@ namespace PasswordManager.Data.Repos
             }
         }
 
-        public UserModel Create(string username, string password)
+        public UserModel GetByName(string searchTerm)
         {
-            if (GetByName(username) == null)
+            return this.ListOfItems.Where(q => q.UserName == searchTerm).FirstOrDefault();
+        }
+
+        public UserModel Create(UserModel model)
+        {
+            if (GetByName(model.UserName) == null)
             {
-                UserModel user = new UserModel(username, password);
-                return user;
+                ListOfItems.Add(model);
+                SaveChanges();
+                return model;
             }
             return null;
         }
 
-        public UserModel GetByName(string searchTerm)
+        public void Remove(UserModel model)
         {
-            return this.ListOfItems.Where(q => q.UserName == searchTerm).FirstOrDefault();
+            ListOfItems.Remove(model);
+            SaveChanges();
+        }
+
+        private void SaveChanges()
+        {
+            using (StreamWriter file = new StreamWriter(STRINGCONSTANTS.USER_DB, false))
+            {
+                foreach (var user in ListOfItems)
+                {
+                    file.WriteLine($"{user.Id},{user.UserName},{user.Password}");
+                }
+            }
         }
     }
 }
