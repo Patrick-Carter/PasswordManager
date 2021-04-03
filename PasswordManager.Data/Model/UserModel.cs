@@ -15,7 +15,7 @@ namespace PasswordManager.Data.Model
         [Required]
         public string Password { get; set; }
 
-        private IEnumerable<PasswordModel> ListOfPassword;
+        private List<PasswordModel> ListOfPassword;
 
         public UserModel(string username, string password)
         {
@@ -38,7 +38,7 @@ namespace PasswordManager.Data.Model
             return ListOfPassword.ToList();
         }
 
-        public void SetListOfPassword(IEnumerable<PasswordModel> listOfPassword)
+        public void SetListOfPassword(List<PasswordModel> listOfPassword)
         {
             ListOfPassword = listOfPassword;
         }
