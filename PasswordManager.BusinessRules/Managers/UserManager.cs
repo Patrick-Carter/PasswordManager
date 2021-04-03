@@ -1,5 +1,6 @@
-﻿using PasswordManager.Data.Model;
-using PasswordManager.Data.UnitOfWork;
+﻿using PasswordManager.Data.dbProcessors;
+using PasswordManager.Data.Model;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,11 +10,11 @@ namespace PasswordManager.BusinessRules.Managers
     public class UserManager : IUserManager
     {
         private UserModel currentUser;
-        private IUnitOfWork uow;
+        private IdbProcesser<UserModel> uow;
 
-        public UserManager(IUnitOfWork unitOfWork = null)
+        public UserManager(IdbProcesser<UserModel> unitOfWork = null)
         {
-            uow = unitOfWork ?? new UnitOfWork();
+            uow = unitOfWork ?? new UserdbProcessor();
         }
 
         public UserModel GetCurrentUser()
@@ -23,7 +24,7 @@ namespace PasswordManager.BusinessRules.Managers
 
         public void LoginUser(string userName, string password)
         {
-            var user = uow.userRepo.FindUser(userName);
+            var user = uow.userRepo.GetByName(userName);
 
             if (user == null || user.Password != password)
             {
@@ -45,7 +46,7 @@ namespace PasswordManager.BusinessRules.Managers
         {
             if (password == currentUser.Password)
             {
-                uow.RemoveUserFromDB(currentUser);
+                uow.RemoveFromDB(currentUser);
                 currentUser = null;
             }
         }

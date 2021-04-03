@@ -1,9 +1,8 @@
 ﻿using PasswordManager.BusinessRules.Managers;
+using PasswordManager.Data.dbProcessors;
 using PasswordManager.Data.Model;
-using PasswordManager.Data.UnitOfWork;
 using System;
-using System.Collections.Generic;
-using System.IO;
+
 
 namespace PasswordManager.ConsoleUI
 {
@@ -11,7 +10,7 @@ namespace PasswordManager.ConsoleUI
     {
         static void Main(string[] args)
         {
-            IUnitOfWork uow = new UnitOfWork();
+            IdbProcesser<UserModel> uow = new UserdbProcessor();
 
             while (true)
             {
@@ -25,7 +24,7 @@ namespace PasswordManager.ConsoleUI
                     while (true)
                     {
                         
-                        if (uow.userRepo.FindUser(username) != null)
+                        if (uow.userRepo.GetByName(username) != null)
                         {
                             Console.WriteLine("username already in use. Please Try again...");
                             username = Console.ReadLine();
@@ -38,8 +37,8 @@ namespace PasswordManager.ConsoleUI
                     
                     Console.WriteLine("enter password...");
                     var password = Console.ReadLine();
-                    var userToAdd = uow.userRepo.CreateUser(username, password);
-                    uow.AddUserToDB(userToAdd);
+                    var userToAdd = uow.userRepo.Create(username, password);
+                    uow.AddToDB(userToAdd);
                 }
                 else if (answer.ToLower() == "login")
                 {

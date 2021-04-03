@@ -6,28 +6,28 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace PasswordManager.Data.UnitOfWork
+namespace PasswordManager.Data.dbProcessors
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UserdbProcessor : IdbProcesser<UserModel>
     {
 
-        public IUserRepo userRepo { get; }
+        public IRepo<UserModel> userRepo { get; }
 
-        public UnitOfWork(IUserRepo userRepo = null)
+        public UserdbProcessor(IRepo<UserModel> userRepo = null)
         {
             this.userRepo = userRepo ?? new UserRepo();
         }
-        public void AddUserToDB(UserModel user)
+        public void AddToDB(UserModel user)
         {
             if (ValidUser(user))
             {
-                userRepo.ListOfUsers.Add(user);
+                userRepo.ListOfItems.Add(user);
                 SaveChanges();
             }
         }
-        public void RemoveUserFromDB(UserModel user)
+        public void RemoveFromDB(UserModel user)
         {
-            userRepo.ListOfUsers.Remove(user);
+            userRepo.ListOfItems.Remove(user);
             SaveChanges();
         }
 
@@ -35,7 +35,7 @@ namespace PasswordManager.Data.UnitOfWork
         {
             using (StreamWriter file = new StreamWriter(STRINGCONSTANTS.USER_DB, false))
             {
-                foreach (var user in userRepo.ListOfUsers)
+                foreach (var user in userRepo.ListOfItems)
                 {
                     file.WriteLine($"{user.Id},{user.UserName},{user.Password}");
                 }
@@ -44,7 +44,7 @@ namespace PasswordManager.Data.UnitOfWork
 
         private bool ValidUser(UserModel user)
         {
-            if (userRepo.FindUser(user.UserName) == null)
+            if (userRepo.GetByName(user.UserName) == null)
             {
                 return true;
             }

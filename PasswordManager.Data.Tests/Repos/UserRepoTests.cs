@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
+using PasswordManager.Data.dbProcessors;
 using PasswordManager.Data.Model;
-using PasswordManager.Data.Tests.UnitOfWork.Mocks;
-using PasswordManager.Data.UnitOfWork;
+using PasswordManager.Data.Tests.dbProcessors.Mocks;
 
 namespace PasswordManager.Data.Tests.Repos
 {
@@ -11,8 +11,8 @@ namespace PasswordManager.Data.Tests.Repos
         [Test]
         public void CreateUser_UniqueUserMade_NewUserCreated()
         {
-            IUnitOfWork uow = new UnitOfWorkMock();
-            UserModel newUser = uow.userRepo.CreateUser("Patrick", "12345");
+            IdbProcesser<UserModel> uow = new UserdbProcessorMock();
+            UserModel newUser = uow.userRepo.Create("Patrick", "12345");
 
             Assert.That(newUser.UserName, Is.EqualTo("Patrick"));
             Assert.That(newUser.Password, Is.EqualTo("12345"));
@@ -22,8 +22,8 @@ namespace PasswordManager.Data.Tests.Repos
         [Test]
         public void CreateUser_UsernameAlreadyInUse_ReturnNull()
         {
-            IUnitOfWork uow = new UnitOfWorkMock();
-            UserModel newUser = uow.userRepo.CreateUser("TakenUserName", "12345");
+            IdbProcesser<UserModel> uow = new UserdbProcessorMock();
+            UserModel newUser = uow.userRepo.Create("TakenUserName", "12345");
 
             Assert.That(newUser, Is.Null);
         }
@@ -31,20 +31,20 @@ namespace PasswordManager.Data.Tests.Repos
         [Test]
         public void FindUser_LookingForUserInDB_ReturnUserObject()
         {
-            IUnitOfWork uow = new UnitOfWorkMock();
+            IdbProcesser<UserModel> uow = new UserdbProcessorMock();
             UserModel userToFind = new UserModel("TakenUserName", "12345");
 
-            UserModel user = uow.userRepo.FindUser(userToFind.UserName);
+            UserModel user = uow.userRepo.GetByName(userToFind.UserName);
 
             Assert.That(user, Is.Not.Null);
         }
         [Test]
         public void FindUser_LookingForUserNotInDB_ReturnNull()
         {
-            IUnitOfWork uow = new UnitOfWorkMock();
+            IdbProcesser<UserModel> uow = new UserdbProcessorMock();
             UserModel userToFind = new UserModel("NotInDB", "12345");
 
-            UserModel user = uow.userRepo.FindUser(userToFind.UserName);
+            UserModel user = uow.userRepo.GetByName(userToFind.UserName);
 
             Assert.That(user, Is.Null);
         }

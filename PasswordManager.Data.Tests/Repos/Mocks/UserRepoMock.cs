@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace PasswordManager.Data.Tests.Repos.Mocks
 {
-    class UserRepoMock : IUserRepo
+    class UserRepoMock : IRepo<UserModel>
     {
-        public List<UserModel> ListOfUsers { get; } = new List<UserModel>
+        public List<UserModel> ListOfItems { get; } = new List<UserModel>
             {
                 new UserModel("TakenUserName", "12345"),
                 new UserModel("Nelly", "12345"),
@@ -19,9 +19,9 @@ namespace PasswordManager.Data.Tests.Repos.Mocks
             
         }
 
-        public UserModel CreateUser(string username, string password)
+        public UserModel Create(string username, string password)
         {
-            if (FindUser(username) == null)
+            if (GetByName(username) == null)
             {
                 UserModel user = new UserModel(username, password);
                 return user;
@@ -29,9 +29,9 @@ namespace PasswordManager.Data.Tests.Repos.Mocks
             return null;
         }
 
-        public UserModel FindUser(string username)
+        public UserModel GetByName(string searchTerm)
         {
-            return this.ListOfUsers.Where(q => q.UserName == username).FirstOrDefault();
+            return this.ListOfItems.Where(q => q.UserName == searchTerm).FirstOrDefault();
         }
     }
 }
