@@ -17,6 +17,11 @@ namespace PasswordManager.BusinessRules.Managers
             this.userRepo = userRepo ?? new UserRepo();
         }
 
+        public void AddPassword(string name, string password)
+        {
+            throw new NotImplementedException();
+        }
+
         public UserModel GetCurrentUser()
         {
             return currentUser;

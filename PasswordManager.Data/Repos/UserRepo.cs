@@ -61,5 +61,10 @@ namespace PasswordManager.Data.Repos
                 }
             }
         }
+
+        public void Update(UserModel model)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

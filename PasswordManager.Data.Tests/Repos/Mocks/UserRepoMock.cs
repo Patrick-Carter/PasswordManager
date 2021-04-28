@@ -38,5 +38,10 @@ namespace PasswordManager.Data.Tests.Repos.Mocks
         {
             ListOfItems.Remove(model);
         }
+
+        public void Update(UserModel model)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace PasswordManager.BusinessRules.Managers
         public void LoginUser(string userName, string password);
 
         public void LogoutUser();
-
+        public void AddPassword(string name, string password);
         public UserModel GetCurrentUser();
         void RemoveUser(string password);
     }
